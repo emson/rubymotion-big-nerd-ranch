@@ -1,0 +1,15 @@
+$:.unshift("/Library/RubyMotion/lib")
+require 'motion/project'
+
+Motion::Project::App.setup do |app|
+  # Use `rake config' to see complete project settings.
+  app.name = 'RM Quiz'
+  app.version = '1.1'
+  app.identifier = 'uk.co.blackbee'
+  # Icons should follow the HIG naming convention
+  # Also just put the launch screen images into the
+  # resources dir for them to be picked up.
+  app.icons = ['Icon.png', 'Icon@2x.png']
+  app.device_family = [:iphone]
+
+end

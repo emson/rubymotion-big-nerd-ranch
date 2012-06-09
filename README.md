@@ -1,66 +1,67 @@
 # RubyMotion Notes
+# RubyMotion
 
 <http://rubymotion.com>
 
 Create a project:
 
-  motion create MyProject
-  
+    motion create MyProject
+    
 Build and run the simulator to see your project:
 
-  rake
-  
+    rake
+    
 RubyMotion has special named parameter syntax.
 
 Cocoa touch delegates back into your application.
 There are many methods in your application that are called by the
 framework:
 
-  AppDelegate
-  application:didFinishLaunchingWithOptions:
-  applicationDidBecomeActive:
-  applicationWillResignActive:
-  applicationDidEnterBackgroud:
-  applicationWillEnterForeground:
-  applicationWillTerminate:
-  
+    AppDelegate
+    application:didFinishLaunchingWithOptions:
+    applicationDidBecomeActive:
+    applicationWillResignActive:
+    applicationDidEnterBackgroud:
+    applicationWillEnterForeground:
+    applicationWillTerminate:
+    
 Entry point to add our own application specific code:
 
-  class AppDelegate
-    def application(application,
+    class AppDelegate
+        def application(application,
 didFinishLaunchingWithOptions:launchOptions)
-      true
+            true
+        end
     end
-  end
-  
+    
 You can create an alert by instantiating an alert view class and give it
 a message:
 
 
-  class AppDelegate
-    def application(application,
+    class AppDelegate
+        def application(application,
 didFinishLaunchingWithOptions:launchOptions)
-      alert = UIAlertView.new
-      alert.message = "Hello World!"
-      alert.show
-      true
+            alert = UIAlertView.new
+            alert.message = "Hello World!"
+            alert.show
+            true
+        end
     end
-  end
 
 Every iOS app has a single window it's where it shows the views.
 
 Objective-C calls are in the form:
 
-  [receiver method: parameter]
-  
-  the message is-
-  method: parameter
-  
+    [receiver method: parameter]
+    
+    the message is-
+    method: parameter
+    
 
 The Objective-C for creating a window is:
 
-  UIWindow *window = [[UIWindow alloc] initWithFrame:frame];
-  
+    UIWindow *window = [[UIWindow alloc] initWithFrame:frame];
+    
 `[[UIWindow alloc] initWithFrame:frame]` is a nested message call.
 
 1. `[UIWindow alloc]` - creates a new UIWindow object, by calling alloc
@@ -72,22 +73,23 @@ The Objective-C for creating a window is:
 
 The Ruby version of the Objective-C code:
 
-  @window = UIWindow.alloc.initWithFrame(frame)
-  
+    @window = UIWindow.alloc.initWithFrame(frame)
+    
 We need to use `@window` to prevent the window object from being
 prematurely garbage collected.
 
 Now we can create a boundary frame:
 
-  class AppDelegate
-    def application(application,
+    class AppDelegate
+        def application(application,
 didFinishLaunchingWithOptions:launchOptions)
-      @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
-      @window.backgroundColor = UIColor.yellowColor
-      @window.makeKeyAndVisible
-      true
+            @window =
+UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+            @window.backgroundColor = UIColor.yellowColor
+            @window.makeKeyAndVisible
+            true
+        end
     end
-  end
 
 `mainScreen` returns the main screen of the device. It has a `bounds`
 method which returns the boundary of the device's screen.
@@ -102,15 +104,15 @@ objects in the console.
 
 Type in `self` to get access to what you just clicked on.
 
-  self.backgroundColor = UIColor.blueColor
-  sessions
-    => [main, #<UIWindow:0x234234>]
-  quit # takes you out of the session
-  app = UIApplication.sharedApplication
-  app.delegate
-  delegate = app.delegate
-  repl(delegate)
-    # now the context is the application delegate
+    self.backgroundColor = UIColor.blueColor
+    sessions
+        => [main, #<UIWindow:0x234234>]
+    quit # takes you out of the session
+    app = UIApplication.sharedApplication
+    app.delegate
+    delegate = app.delegate
+    repl(delegate)
+        # now the context is the application delegate
 
 
 ### Rake, Configuration and Icons
@@ -118,17 +120,17 @@ Type in `self` to get access to what you just clicked on.
 Add your icon to the resources directory. Then change the `Rakefile`, by
 appending the icon name to the `app.icons` array e.g. in the Rakefile
 
-  app.name = 'My Project Name
-  app.icons << 'icon.png'
-  
+    app.name = 'My Project Name
+    app.icons << 'icon.png'
+    
 To see the configuration:
 
-  rake config
+    rake config
 
 To clean and run the app
 
-  rake clean=1
-  
+    rake clean=1
+    
 
 ## Code Undersatanding
 
@@ -139,31 +141,31 @@ So the window needs a `rootViewController`
 
 Create a view controller as such:
 
-  class MyViewController < UIViewController
-  end
+    class MyViewController < UIViewController
+    end
 
 A view controller can manage one or more views.  
 Views controllers have a set of standard callback methods:
 
-  loadView
-  viewDidLoad
-  viewDidUnload
-  viewWillAppear:
-  viewDidAppear:
-  shouldAutorotateToInterfaceOrientation:
-  didReceiveMemoryWarning
+    loadView
+    viewDidLoad
+    viewDidUnload
+    viewWillAppear:
+    viewDidAppear:
+    shouldAutorotateToInterfaceOrientation:
+    didReceiveMemoryWarning
 
 ####Adding a view to the view controller
 
-  class MyViewController <UIViewController
-    def loadView
-      self.view = UIImageView.alloc.init
+    class MyViewController <UIViewController
+        def loadView
+            self.view = UIImageView.alloc.init
+        end
+        
+        def viewDidLoad
+            view.image = UIImage.imagedNamed('background.png')
+        end
     end
-    
-    def viewDidLoad
-      view.image = UIImage.imagedNamed('background.png')
-    end
-  end
 
 #### Views
 Views can have other nested subviews in a tree like structure.
@@ -172,47 +174,47 @@ Add the label as a subview of the image view.
 
 First we need to create a label frame for our label:
 
-  lableFrame = CGRectMake(x, y, width, hight)
+    lableFrame = CGRectMake(x, y, width, hight)
 
 RubyMotion give you access to all the `C` functions on the object class.
 `CGRectMake` is a function on the object.
 
 We can then create our label with:
 
-  lableFrame = CGRectMake(10, 60, 300, 80)
-  @label = UILable.alloc.initWithFrame(labelFrame)
-  
+    lableFrame = CGRectMake(10, 60, 300, 80)
+    @label = UILable.alloc.initWithFrame(labelFrame)
+    
 But there is a shortcut to do this:
 
-  labelFrame = [[10, 60], [300,80]]
+    labelFrame = [[10, 60], [300,80]]
 
 Now add the subview label:
 
-  class MyViewController <UIViewController
-    def loadView
-      self.view = UIImageView.alloc.init
+    class MyViewController <UIViewController
+        def loadView
+            self.view = UIImageView.alloc.init
+        end
+        
+        def viewDidLoad
+            view.image = UIImage.imagedNamed('background.png')
+            @label = UILable.alloc.initWithFrame([[10, 60], [300,80]])
+            view.addSubview(@label)
+        end
     end
-    
-    def viewDidLoad
-      view.image = UIImage.imagedNamed('background.png')
-      @label = UILable.alloc.initWithFrame([[10, 60], [300,80]])
-      view.addSubview(@label)
-    end
-  end
 
 #### Refactor
 
 Refactor the label out of the `viewDidLoad` method:
 
-  def makeLabel
-    label = UILabel.alloc.initWithFrame([[10, 60], [300, 80]])
-    label.backgroundColor = UIColor.lightGrayColor
-    label.text = "Tap for Answer!"
-    label.font = UIFont.boldSystemFontOfSize(34)
-    label.textColor = UIFont.darkGrayColor
-    lable.testAlignment = UITextAlignmentCenter
-    label
-  end
+    def makeLabel
+        label = UILabel.alloc.initWithFrame([[10, 60], [300, 80]])
+        label.backgroundColor = UIColor.lightGrayColor
+        label.text = "Tap for Answer!"
+        label.font = UIFont.boldSystemFontOfSize(34)
+        label.textColor = UIFont.darkGrayColor
+        lable.testAlignment = UITextAlignmentCenter
+        label
+    end
 
 
 ### Interaction
@@ -223,31 +225,31 @@ Add a *gesture recognizer* to the image view that will send a message
 
 Objective-C code:
 
-  UiTapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] 
-    initWithTarget:self
-        action:@selector(showAnswer)];
-    
+    UiTapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] 
+        initWithTarget:self
+                action:@selector(showAnswer)];
+        
 `@selector(showAnswer)` will call the `showAnswer` method, `@selector`
 allows you to call methods dynamically in Objective-C.
 
 RubyMotion version:
 
-  recogniser = UITapGestureRecognizer.alloc.initWithTarget(self,
+    recogniser = UITapGestureRecognizer.alloc.initWithTarget(self,
 action:'showAnswer')
 
 You will also need to enable user interaction and then add this gesture
 to the view, thus:
 
-  view.userInteractinEnabled = true
-  recognizer = UITapGestureRecognizer.alloc.initWithTarget(self,
+    view.userInteractinEnabled = true
+    recognizer = UITapGestureRecognizer.alloc.initWithTarget(self,
 action:'showAnswer')
-  view.addGestureRecognizer(recognizer)
+    view.addGestureRecognizer(recognizer)
 
 Now define your `showAnswer` method:
 
-  def showAnswer
-    @label.text = ['yes', 'no', 'maybe', 'try again'].sample
-  end
+    def showAnswer
+        @label.text = ['yes', 'no', 'maybe', 'try again'].sample
+    end
 
 
 
@@ -256,35 +258,35 @@ Now define your `showAnswer` method:
 
 Objective-C UIView class method for animating:
 
-  + (void)animatedWithDuration:(NSTimeInterval)duration
-            animations:(void (^)(void))animations
+    + (void)animatedWithDuration:(NSTimeInterval)duration
+                      animations:(void (^)(void))animations
 
 Called with:
 
-  [UIView animatedWithDuration:1.0
-          animations:^(
-            @label.alpha = 1
-          )];
+    [UIView animatedWithDuration:1.0
+                    animations:^(
+                        @label.alpha = 1
+                    )];
 
 The RubyMotion version:
 
-  UIView.animatedWithDuration(1.0, 
-    animations:lambda{
-      @label.alpha = 1
-    })
+    UIView.animatedWithDuration(1.0, 
+        animations:lambda{
+            @label.alpha = 1
+        })
 
 You can also add a completion block which will be executed on completion
 of the animation:
 
 
-  UIView.animatedWithDuration(1.0, 
-    animations:lambda{
-      @label.alpha = 0
-    },
-    completion:lambda{
-      @label.text = "some value"
-      @label.alpha = 1.0
-    })
+    UIView.animatedWithDuration(1.0, 
+        animations:lambda{
+            @label.alpha = 0
+        },
+        completion:lambda{
+            @label.text = "some value"
+            @label.alpha = 1.0
+        })
 
 ## Tips
 

@@ -9,6 +9,7 @@ class QuizViewController < UIViewController
   end
 
   def viewDidLoad
+    super
     # can't call self.margin because margin is a private method
     @question_label = add_to_view( build_label(@questions.first, margin, 50, width, 40) )
     @question_button = add_to_view( build_button('Show Question', margin, 100, width, 30) )

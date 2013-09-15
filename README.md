@@ -240,7 +240,7 @@ action:'showAnswer')
 You will also need to enable user interaction and then add this gesture
 to the view, thus:
 
-    view.userInteractinEnabled = true
+    view.userInteractionEnabled = true
     recognizer = UITapGestureRecognizer.alloc.initWithTarget(self,
 action:'showAnswer')
     view.addGestureRecognizer(recognizer)

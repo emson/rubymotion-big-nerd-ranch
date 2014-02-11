@@ -28,8 +28,7 @@ framework:
 Entry point to add our own application specific code:
 
     class AppDelegate
-        def application(application,
-didFinishLaunchingWithOptions:launchOptions)
+        def application(application, didFinishLaunchingWithOptions:launchOptions)
             true
         end
     end
@@ -39,8 +38,7 @@ a message:
 
 
     class AppDelegate
-        def application(application,
-didFinishLaunchingWithOptions:launchOptions)
+        def application(application, didFinishLaunchingWithOptions:launchOptions)
             alert = UIAlertView.new
             alert.message = "Hello World!"
             alert.show
@@ -81,10 +79,8 @@ prematurely garbage collected.
 Now we can create a boundary frame:
 
     class AppDelegate
-        def application(application,
-didFinishLaunchingWithOptions:launchOptions)
-            @window =
-UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+        def application(application, didFinishLaunchingWithOptions:launchOptions)
+            @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
             @window.backgroundColor = UIColor.yellowColor
             @window.makeKeyAndVisible
             true
@@ -234,15 +230,13 @@ allows you to call methods dynamically in Objective-C.
 
 RubyMotion version:
 
-    recogniser = UITapGestureRecognizer.alloc.initWithTarget(self,
-action:'showAnswer')
+    recogniser = UITapGestureRecognizer.alloc.initWithTarget(self, action:'showAnswer')
 
 You will also need to enable user interaction and then add this gesture
 to the view, thus:
 
     view.userInteractionEnabled = true
-    recognizer = UITapGestureRecognizer.alloc.initWithTarget(self,
-action:'showAnswer')
+    recognizer = UITapGestureRecognizer.alloc.initWithTarget(self, action:'showAnswer')
     view.addGestureRecognizer(recognizer)
 
 Now define your `showAnswer` method:
